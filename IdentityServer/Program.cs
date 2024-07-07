@@ -1,4 +1,7 @@
 using AuthApi.Class;
+using IdentityServer.Data;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace IdentityServer
 {
@@ -16,6 +19,10 @@ namespace IdentityServer
               .AddInMemoryClients(Config.GetClients())
               .AddDeveloperSigningCredential();
             //  builder.Services.AddControllersWithViews();
+
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+      options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
