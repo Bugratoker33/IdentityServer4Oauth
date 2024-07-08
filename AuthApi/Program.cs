@@ -1,4 +1,4 @@
-using AuthApi.Class;
+
 
 namespace AuthApi
 {
@@ -11,14 +11,14 @@ namespace AuthApi
             // Add services to the container.
 
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
-           builder.Services.AddIdentityServer()
-           .AddInMemoryApiResources(Config.GetApiResources())
-           .AddInMemoryApiScopes(Config.GetApiScopes())
-           .AddInMemoryClients(Config.GetClients())
-           .AddDeveloperSigningCredential();
+           // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+           // builder.Services.AddEndpointsApiExplorer();
+           // builder.Services.AddSwaggerGen();
+           //builder.Services.AddIdentityServer()
+           //.AddInMemoryApiResources(Config.GetApiResources())
+           //.AddInMemoryApiScopes(Config.GetApiScopes())
+           //.AddInMemoryClients(Config.GetClients())
+           //.AddDeveloperSigningCredential();
            
             
             
