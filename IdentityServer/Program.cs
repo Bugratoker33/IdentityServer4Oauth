@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using static IdentityServer4.IdentityServerConstants;
 
@@ -62,9 +63,19 @@ namespace IdentityServer
               .AddInMemoryApiResources(Config.GetApiResources())
               .AddInMemoryApiScopes(Config.GetApiScopes())
               .AddInMemoryClients(Config.GetClients())
-              .AddAspNetIdentity<ApplicationUser>()
+              .AddAspNetIdentity<ApplicationUser>()              
               .AddDeveloperSigningCredential();
+            //builder.Services.AddAuthentication()
+            //    .AddGoogle(options =>
+            //    {
+            //        options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
 
+            //        // register your IdentityServer with Google at https://console.developers.google.com
+            //        // enable the Google+ API
+            //        // set the redirect URI to https://localhost:5001/signin-google
+            //        options.ClientId = "copy client ID from Google here";
+            //        options.ClientSecret = "copy client secret from Google here";
+            //    });
             builder.Services.AddAuthentication();
 
             var app = builder.Build();

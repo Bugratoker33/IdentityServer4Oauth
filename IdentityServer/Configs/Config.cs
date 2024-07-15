@@ -9,6 +9,7 @@ namespace AuthApi.Class
     {
         #region Scopes
         //API'larda kullanılacak izinleri tanımlar.
+        //metodu içerisinde API’lar da kullanılacak olan yetkileri
         public static IEnumerable<ApiScope> GetApiScopes()
         {
             return new List<ApiScope>
@@ -18,11 +19,13 @@ namespace AuthApi.Class
                 new ApiScope("Garanti.Read","Garanti bankası okuma izni"),
                 new ApiScope("HalkBank.Write","HalkBank bankası yazma izni"),
                 new ApiScope("HalkBank.Read","HalkBank bankası okuma izni"),
+
             };
         }
         #endregion
         #region Resources
         //API'lar tanımlanır.
+
         public static IEnumerable<ApiResource> GetApiResources()
         {
             return new List<ApiResource>
@@ -34,7 +37,8 @@ namespace AuthApi.Class
                     },
                     Scopes = {
                         "Garanti.Write",
-                        "Garanti.Read"
+                        "Garanti.Read",
+                       
                     }
                 },
                 new ApiResource("HalkBank"){
@@ -61,7 +65,7 @@ namespace AuthApi.Class
                             ClientName = "GarantiBankasi",
                             ClientSecrets = { new Secret("garanti".Sha256()) },
                             AllowedGrantTypes = { GrantType.ClientCredentials },
-                            AllowedScopes = { "Garanti.Write", "Garanti.Read" , IdentityServerConstants.LocalApi.ScopeName }
+                            AllowedScopes = { "Garanti.Write", "Garanti.Read" ,"Burası çaılışıyr ", IdentityServerConstants.LocalApi.ScopeName }
                         },
                 new Client
                         {
@@ -70,7 +74,34 @@ namespace AuthApi.Class
                             ClientSecrets = { new Secret("halkbank".Sha256()) },
                             AllowedGrantTypes = { GrantType.ClientCredentials },
                             AllowedScopes = { "HalkBank.Write", "HalkBank.Read" }
-                        }
+                        },
+                  new Client()
+                {
+                    ClientName = "Asp.Net Core MVC",
+                    ClientId = "WebMvcClientForUser",
+                    AllowOfflineAccess = true,
+                    ClientSecrets =
+                    {
+                        new Secret("secret".Sha256())
+                    },
+                    AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
+                    AllowedScopes=
+                    {
+                        //IdentityServerConstants.StandardScopes.Email,
+                        //IdentityServerConstants.StandardScopes.OpenId,
+                        //IdentityServerConstants.StandardScopes.Profile,
+                        //IdentityServerConstants.StandardScopes.OfflineAccess,
+                        //IdentityServerConstants.LocalApi.ScopeName,
+                        "basket_fullpermission",
+                        "order_fullpermission",
+                        "gateway_fullpermission",
+                        //"roles"
+                    },
+                    AccessTokenLifetime = 1*60*60,
+                    RefreshTokenExpiration = TokenExpiration.Absolute,
+                    AbsoluteRefreshTokenLifetime = (int)(DateTime.Now.AddDays(60)-DateTime.Now).TotalSeconds,
+                    RefreshTokenUsage = TokenUsage.ReUse
+                }
             };
         }
 
@@ -108,7 +139,7 @@ namespace AuthApi.Class
                 new IdentityResources.Email(),
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
-              //  new IdentityResource(){Name="roles",DisplayName = "Roles", Description="Kullanıcı rolleri",UserClaims=new[]{"role"}}
+                new IdentityResource(){Name="roles",DisplayName = "Roles", Description="Kullanıcı rolleri",UserClaims=new[]{"role"}}
              };
         }
     }
